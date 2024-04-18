@@ -18,6 +18,8 @@ jobs:
 
       - name: Merge Development into Testing
         run: |
+          git config --global user.email "patyalanil26@gmail.com"
+          git config --global user.name "apatyal"      
           git checkout dev
           git checkout -b testing || git checkout testing
           git merge --no-ff --no-edit FETCH_HEAD
