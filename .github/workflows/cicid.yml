@@ -1,7 +1,8 @@
+name: retagging
 on:
   pull_request_target:
     branches: [ "dev" ]
-    types: [ closed ]
+    types: [ "closed" ]
 
 jobs:
   merge-development-into-testing:
@@ -11,22 +12,33 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+        with:
+          ref: testing
+          token: ${{ secrets.GH_PAT }}
+          lfs: true
 
-      - name: Fetch Development Branch
+      - name: changing folder name
         run: |
-         git fetch origin dev
-
-      - name: Merge Development into Testing
-        env:
-         GITHUB_TOKEN: ${{ secrets.GH_PAT }}
-        run: |
-          git config --global user.email "patyalanil26@gmail.com"
-          git config --global user.name "apatyal"      
-          git checkout dev
-          git checkout -b testing || git checkout testing
-          git merge --no-ff --no-edit FETCH_HEAD
-          git push origin testing
+          git mv ./dev ./test
+          ls
 
       - name: Replace credentials
         run: |
-          sed -i 's/hi How are you?/Hello, Iam fine!/' test
+          sed -i 's/hi How are you?/Hello, Iam fine!/' ./test
+          cat test
+
+      - name: Merge Development into Testing
+        run: |
+          git config --global user.email "patyalanil26@gmail.com"
+          git config --global user.name "apatyal"      
+          git fetch
+          git add .
+          git commit -m "chal bhai"
+          git pull
+
+      - name: push changes
+        uses: ad-m/github-push-action@master    
+        with:
+          token: ${{ secrets.GH_PAT }}
+          branch: testing
+          force: true
