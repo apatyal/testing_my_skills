@@ -20,7 +20,7 @@ jobs:
       - name: changing folder name
         working-directory: .
         run: |
-          git mv dev test
+          git mv dev testing
           ls
 
       - name: Replace credentials
