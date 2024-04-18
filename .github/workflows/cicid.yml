@@ -18,8 +18,9 @@ jobs:
           lfs: true
 
       - name: changing folder name
+        working-directory: .
         run: |
-          git mv ./dev ./test
+          git mv dev test
           ls
 
       - name: Replace credentials
