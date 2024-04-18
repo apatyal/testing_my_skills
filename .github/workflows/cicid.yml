@@ -1,0 +1,28 @@
+on:
+  pull_request_target:
+    branches: [ "dev" ]
+    types: [ closed ]
+
+jobs:
+  merge-development-into-testing:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Fetch Development Branch
+        run: |
+         git fetch origin development
+
+      - name: Merge Development into Testing
+        run: |
+          git checkout dev
+          git checkout -b testing || git checkout testing
+          git merge --no-ff --no-edit FETCH_HEAD
+          git push origin testing
+
+      - name: Replace credentials
+        run: |
+          sed -i 's/hi How are you?/Hello, Iam fine!/' test
