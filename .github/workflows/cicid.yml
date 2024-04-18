@@ -25,8 +25,8 @@ jobs:
 
       - name: Replace credentials
         run: |
-          sed -i 's/hi How are you?/Hello, Iam fine!/' ./test
-          cat test
+          sed -i 's/hi How are you?/Hello, Iam fine!/' ./xyz
+          cat xyz
 
       - name: Merge Development into Testing
         run: |
