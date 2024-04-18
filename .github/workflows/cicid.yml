@@ -14,7 +14,7 @@ jobs:
 
       - name: Fetch Development Branch
         run: |
-         git fetch origin development
+         git fetch origin dev
 
       - name: Merge Development into Testing
         run: |
